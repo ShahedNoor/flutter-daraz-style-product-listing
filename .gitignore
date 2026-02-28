@@ -1,0 +1,75 @@
+# Miscellaneous
+*.class
+*.log
+*.pyc
+*.swp
+.DS_Store
+.atom/
+.buildlog/
+.history
+.svn/
+.idea/
+*.iml
+
+# IntelliJ related
+*.ipr
+*.iws
+.idea/
+
+# The .vscode/ directory contains settings for Visual Studio Code.
+# For more information, see https://code.visualstudio.com/docs/getstarted/settings
+.vscode/
+
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
+**/ios/Flutter/Ephemeral/
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/flutter_export_environment.sh
+**/ios/Flutter/Flutter.podspec
+**/ios/ServiceDefinitions.json
+**/ios/Runner/GeneratedPluginRegistrant.[mh]
+**/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
+**/android/gen/
+**/android/local.properties
+**/android/flutter-plugins-dependencies
+**/android/flutter-plugins
+**/android/key.properties
+**/android/app/google-services.json
+**/ios/Runner/GoogleService-Info.plist
+**/ios/Config/GoogleService-Info.plist
+**/windows/flutter/generated_plugin_registrant.cc
+**/windows/flutter/generated_plugin_registrant.h
+**/linux/flutter/generated_plugin_registrant.cc
+**/linux/flutter/generated_plugin_registrant.h
+**/macos/Flutter/GeneratedPluginRegistrant.swift
+**/macos/Flutter/ephemeral/
+**/web/stacktrace.js
+**/web/main.dart.js
+**/web/main.dart.js.map
+**/web/main.dart.js.deps
+
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+.pub/
+/build/
+
+# Symbolcation related
+app.*.symbols
+
+# Executable related
+**/pigeons/
+
+# Android Studio related
+.gradle/
+captures/
+**/google-services.json
+
+# iOS related
+**/Runner/GoogleService-Info.plist
+
+# Web related
+node_modules/
