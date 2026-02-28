@@ -38,3 +38,16 @@ The vertical scroll is primarily owned and coordinated by a parent `NestedScroll
 
 - **Sliver Constraints:** `NestedScrollView` can be rigid. It demands that the inner body provides actual scrollable extents. To ensure that tabs with very few products can still push the header up to collapse it, I had to inject a `SliverToBoxAdapter` with a blank `SizedBox` at the bottom of the lists as a scroll buffer.
 - **Complex Header Animations:** Fading between the Daraz logo and the search bar based on scroll offset required a custom `LayoutBuilder` checking the scroll constraints manually, since standard `SliverAppBar.flexibleSpace` doesn't support complex widget swapping cleanly based on pinned states.
+
+## The "Magic" Behind Independent Tab Scrolling
+
+Because this was an architecture and gesture-coordination problem, not just UI, the biggest challenge was **Tab Scroll Independence**. By default, `NestedScrollView` shares a global scroll offset among all its inner tabs—meaning if you scroll down in Tab A and swipe to Tab B, Tab B starts midway down the page instead of at the top.
+
+To fix this and enforce true isolation, we implemented Flutter's overlap architecture:
+
+1. **`SliverOverlapAbsorber`**: Wraps the outer `SliverAppBar`. It intercepts and "absorbs" the height of the collapsing header dynamically.
+2. **`Builder` Context Separation**: Each individual tab inside the `TabBarView` is wrapped in its own `Builder` so it gets a fresh element context separate from the parent.
+3. **`SliverOverlapInjector`**: Sits at the very top of the inner `CustomScrollView` inside each tab. It "injects" the absorbed height from the outer header back into the local tab.
+4. **`PageStorageKey`**: Assigned dynamically to each tab (e.g., `PageStorageKey('tab_0')`).
+
+**The Result:** `NestedScrollView` no longer forces Tabs to share a scrolling extent. The inner slivers negotiate the header collapse via the Absorber/Injector link, while `PageStorageKey` saves their physical offsets pixel-perfectly without leaking between gesture transitions.

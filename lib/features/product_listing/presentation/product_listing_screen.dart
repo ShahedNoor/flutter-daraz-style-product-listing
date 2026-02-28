@@ -77,7 +77,9 @@ class _ProductListingScreenState extends State<ProductListingScreen>
                     handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
                         context),
                     sliver: SliverAppBar(
-                      expandedHeight: 80.0,
+                      expandedHeight: 200.0,
+                      collapsedHeight: 60.0,
+                      toolbarHeight: 60.0,
                       pinned: true,
                       backgroundColor: AppColors.cDarazOrange,
                       forceElevated: innerBoxIsScrolled,
@@ -85,32 +87,37 @@ class _ProductListingScreenState extends State<ProductListingScreen>
                         builder:
                             (BuildContext context, BoxConstraints constraints) {
                           final double top = constraints.biggest.height;
-                          final double collapsedHeight = kToolbarHeight +
-                              MediaQuery.of(context).padding.top;
-                          final bool isCollapsed = top <= collapsedHeight + 15;
+                          final bool isCollapsed = top <=
+                              60 + 48 + MediaQuery.of(context).padding.top + 20;
 
-                          return SafeArea(
-                            child: Container(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 16.0),
-                              alignment: Alignment.bottomCenter,
-                              child: Padding(
-                                padding: const EdgeInsets.only(bottom: 8.0),
-                                child: AnimatedCrossFade(
-                                  alignment: Alignment.center,
-                                  crossFadeState: isCollapsed
-                                      ? CrossFadeState.showSecond
-                                      : CrossFadeState.showFirst,
-                                  duration: const Duration(milliseconds: 250),
-                                  firstChild: Center(
+                          return Container(
+                            alignment: Alignment.bottomCenter,
+                            child: Padding(
+                              padding: const EdgeInsets.only(
+                                  bottom: 48.0 + 10.0, left: 16.0, right: 16.0),
+                              child: AnimatedCrossFade(
+                                alignment: Alignment.bottomCenter,
+                                crossFadeState: isCollapsed
+                                    ? CrossFadeState.showSecond
+                                    : CrossFadeState.showFirst,
+                                duration: const Duration(milliseconds: 250),
+                                firstChild: Padding(
+                                  padding: EdgeInsets.only(
+                                    top:
+                                        MediaQuery.of(context).padding.top + 10,
+                                  ),
+                                  child: Center(
                                     child: Image.asset(
                                       Assets.images.logo.path,
                                       color: Colors.white,
                                       fit: BoxFit.contain,
+                                      height: 100,
                                     ),
                                   ),
-                                  secondChild: Container(
-                                    height: 40,
+                                ),
+                                secondChild: SizedBox(
+                                  height: 40,
+                                  child: Container(
                                     decoration: BoxDecoration(
                                       color: Colors.white,
                                       borderRadius: BorderRadius.circular(8),
