@@ -65,142 +65,145 @@ class _ProductListingScreenState extends State<ProductListingScreen>
           final hasError = snapshot.hasError;
           final products = snapshot.data ?? [];
 
-          return RefreshIndicator(
-            onRefresh: () async {
-              await getProductsRx.fetchProducts(forceRefresh: true);
-            },
-            child: NestedScrollView(
-              headerSliverBuilder:
-                  (BuildContext context, bool innerBoxIsScrolled) {
-                return <Widget>[
-                  SliverOverlapAbsorber(
-                    handle: NestedScrollView.sliverOverlapAbsorberHandleFor(
-                        context),
-                    sliver: SliverAppBar(
-                      expandedHeight: 200.0,
-                      collapsedHeight: 60.0,
-                      toolbarHeight: 60.0,
-                      pinned: true,
-                      backgroundColor: AppColors.cDarazOrange,
-                      forceElevated: innerBoxIsScrolled,
-                      flexibleSpace: LayoutBuilder(
-                        builder:
-                            (BuildContext context, BoxConstraints constraints) {
-                          final double top = constraints.biggest.height;
-                          final bool isCollapsed = top <=
-                              60 + 48 + MediaQuery.of(context).padding.top + 20;
+          return NestedScrollView(
+            headerSliverBuilder:
+                (BuildContext context, bool innerBoxIsScrolled) {
+              return <Widget>[
+                SliverOverlapAbsorber(
+                  handle:
+                      NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+                  sliver: SliverAppBar(
+                    expandedHeight: 200.0,
+                    collapsedHeight: 60.0,
+                    toolbarHeight: 60.0,
+                    pinned: true,
+                    backgroundColor: AppColors.cDarazOrange,
+                    forceElevated: innerBoxIsScrolled,
+                    flexibleSpace: LayoutBuilder(
+                      builder:
+                          (BuildContext context, BoxConstraints constraints) {
+                        final double top = constraints.biggest.height;
+                        final bool isCollapsed = top <=
+                            60 + 48 + MediaQuery.of(context).padding.top + 20;
 
-                          return Container(
-                            alignment: Alignment.bottomCenter,
-                            child: Padding(
-                              padding: const EdgeInsets.only(
-                                  bottom: 48.0 + 10.0, left: 16.0, right: 16.0),
-                              child: AnimatedCrossFade(
-                                alignment: Alignment.bottomCenter,
-                                crossFadeState: isCollapsed
-                                    ? CrossFadeState.showSecond
-                                    : CrossFadeState.showFirst,
-                                duration: const Duration(milliseconds: 250),
-                                firstChild: Padding(
-                                  padding: EdgeInsets.only(
-                                    top:
-                                        MediaQuery.of(context).padding.top + 10,
-                                  ),
-                                  child: Center(
-                                    child: Image.asset(
-                                      Assets.images.logo.path,
-                                      color: Colors.white,
-                                      fit: BoxFit.contain,
-                                      height: 100,
-                                    ),
+                        return Container(
+                          alignment: Alignment.bottomCenter,
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                                bottom: 48.0 + 10.0, left: 16.0, right: 16.0),
+                            child: AnimatedCrossFade(
+                              alignment: Alignment.bottomCenter,
+                              crossFadeState: isCollapsed
+                                  ? CrossFadeState.showSecond
+                                  : CrossFadeState.showFirst,
+                              duration: const Duration(milliseconds: 250),
+                              firstChild: Padding(
+                                padding: EdgeInsets.only(
+                                  top: MediaQuery.of(context).padding.top + 10,
+                                ),
+                                child: Center(
+                                  child: Image.asset(
+                                    Assets.images.logo.path,
+                                    color: Colors.white,
+                                    fit: BoxFit.contain,
+                                    height: 100,
                                   ),
                                 ),
-                                secondChild: SizedBox(
-                                  height: 40,
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    child: TextField(
-                                      decoration: InputDecoration(
-                                        hintText:
-                                            'Search for products, brands...',
-                                        hintStyle: TextFontStyle
-                                            .textStyle14c6B7280Inter400,
-                                        prefixIcon: const Icon(Icons.search,
-                                            color: AppColors.c6B7280),
-                                        border: InputBorder.none,
-                                        isDense: true,
-                                        contentPadding:
-                                            const EdgeInsets.only(top: 8),
-                                      ),
+                              ),
+                              secondChild: SizedBox(
+                                height: 40,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: TextField(
+                                    decoration: InputDecoration(
+                                      hintText:
+                                          'Search for products, brands...',
+                                      hintStyle: TextFontStyle
+                                          .textStyle14c6B7280Inter400,
+                                      prefixIcon: const Icon(Icons.search,
+                                          color: AppColors.c6B7280),
+                                      border: InputBorder.none,
+                                      isDense: true,
+                                      contentPadding:
+                                          const EdgeInsets.only(top: 8),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                          );
-                        },
-                      ),
-                      bottom: PreferredSize(
-                        preferredSize: const Size.fromHeight(48),
-                        child: Container(
-                          color: AppColors.cFFFFFF,
-                          width: double.infinity,
-                          child: TabBar(
-                            controller: _tabController,
-                            isScrollable: true,
-                            labelColor: AppColors.cDarazOrange,
-                            unselectedLabelColor: AppColors.c4B5563,
-                            indicatorColor: AppColors.cDarazOrange,
-                            labelStyle: TextFontStyle.textStyle14c0A192FInter600
-                                .copyWith(color: AppColors.cDarazOrange),
-                            unselectedLabelStyle:
-                                TextFontStyle.textStyle14c4B5563Inter400,
-                            onTap: (index) {
-                              getProductsRx.setActiveTab(index);
-                            },
-                            tabs: _tabs.map((t) => Tab(text: t)).toList(),
                           ),
+                        );
+                      },
+                    ),
+                    bottom: PreferredSize(
+                      preferredSize: const Size.fromHeight(48),
+                      child: Container(
+                        color: AppColors.cFFFFFF,
+                        width: double.infinity,
+                        child: TabBar(
+                          controller: _tabController,
+                          isScrollable: true,
+                          labelColor: AppColors.cDarazOrange,
+                          unselectedLabelColor: AppColors.c4B5563,
+                          indicatorColor: AppColors.cDarazOrange,
+                          labelStyle: TextFontStyle.textStyle14c0A192FInter600
+                              .copyWith(color: AppColors.cDarazOrange),
+                          unselectedLabelStyle:
+                              TextFontStyle.textStyle14c4B5563Inter400,
+                          onTap: (index) {
+                            getProductsRx.setActiveTab(index);
+                          },
+                          tabs: _tabs.map((t) => Tab(text: t)).toList(),
                         ),
                       ),
                     ),
                   ),
-                ];
-              },
-              body: isLoading
-                  ? const Center(child: CircularProgressIndicator())
-                  : hasError
-                      ? const Center(child: Text('Error loading products.'))
-                      : TabBarView(
-                          controller: _tabController,
-                          children: _tabs.asMap().entries.map((entry) {
-                            int idx = entry.key;
+                ),
+              ];
+            },
+            body: isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : hasError
+                    ? const Center(child: Text('Error loading products.'))
+                    : TabBarView(
+                        controller: _tabController,
+                        children: _tabs.asMap().entries.map((entry) {
+                          int idx = entry.key;
 
-                            List<ProductModel> filtered = [];
-                            if (idx % 4 == 0) {
-                              filtered = products;
-                            } else if (idx % 4 == 1) {
-                              filtered = products
-                                  .where((p) => p.category == 'electronics')
-                                  .toList();
-                            } else if (idx % 4 == 2) {
-                              filtered = products
-                                  .where((p) => p.category == 'jewelery')
-                                  .toList();
-                            } else if (idx % 4 == 3) {
-                              filtered = products
-                                  .where((p) => p.category == "men's clothing")
-                                  .toList();
-                            }
+                          List<ProductModel> filtered = [];
+                          if (idx % 4 == 0) {
+                            filtered = products;
+                          } else if (idx % 4 == 1) {
+                            filtered = products
+                                .where((p) => p.category == 'electronics')
+                                .toList();
+                          } else if (idx % 4 == 2) {
+                            filtered = products
+                                .where((p) => p.category == 'jewelery')
+                                .toList();
+                          } else if (idx % 4 == 3) {
+                            filtered = products
+                                .where((p) => p.category == "men's clothing")
+                                .toList();
+                          }
 
-                            return SafeArea(
-                              top: false,
-                              bottom: true,
-                              child: Builder(
-                                builder: (BuildContext context) {
-                                  return CustomScrollView(
+                          return SafeArea(
+                            top: false,
+                            bottom: true,
+                            child: Builder(
+                              builder: (BuildContext context) {
+                                return RefreshIndicator(
+                                  edgeOffset: 60 +
+                                      48 +
+                                      MediaQuery.of(context).padding.top,
+                                  onRefresh: () async {
+                                    await getProductsRx.fetchProducts(
+                                        forceRefresh: true);
+                                  },
+                                  child: CustomScrollView(
                                     key: PageStorageKey<String>('tab_$idx'),
                                     physics:
                                         const AlwaysScrollableScrollPhysics(),
@@ -241,13 +244,13 @@ class _ProductListingScreenState extends State<ProductListingScreen>
                                         child: SizedBox(height: 120),
                                       ),
                                     ],
-                                  );
-                                },
-                              ),
-                            );
-                          }).toList(),
-                        ),
-            ),
+                                  ),
+                                );
+                              },
+                            ),
+                          );
+                        }).toList(),
+                      ),
           );
         },
       ),
